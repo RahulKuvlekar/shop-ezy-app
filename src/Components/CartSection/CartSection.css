@@ -1,0 +1,26 @@
+.cart__container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 75%;
+  padding: 1.2rem;
+  justify-content: space-around;
+  margin-bottom: 5rem;
+}
+
+.cartSidebar__section {
+  background-color: #212529;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 5.7rem;
+  right: 0;
+  width: 20%;
+  margin: 10px 10px 0 10px;
+  height: 88vh;
+}
+.goback__btn {
+  color: blue !important;
+  text-decoration: underline !important;
+}
