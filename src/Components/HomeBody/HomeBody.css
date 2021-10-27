@@ -1,0 +1,13 @@
+.home__section {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 5rem;
+}
+.product__container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 75%;
+  padding: 1.2rem;
+  justify-content: space-around;
+  margin-bottom: 5rem;
+}
