@@ -63,7 +63,15 @@ const Header = () => {
                 {cart?.length > 0 && <Badge bg="danger">{cart?.length}</Badge>}
               </Dropdown.Toggle>
 
-              <Dropdown.Menu style={{ minWidth: 350 }}>
+              <Dropdown.Menu
+                style={{
+                  minWidth: 350,
+                  maxHeight: 500,
+                  overflowY: "scroll",
+                  overflowX: "hidden",
+                  paddingBottom: "0",
+                }}
+              >
                 {cart.length > 0 ? (
                   <>
                     {cart.map((product) => (
@@ -93,8 +101,22 @@ const Header = () => {
                     <Link to="/cart-section">go to cart</Link>
 
                     <Link to="/">go to home</Link>
-                    <Link to="/cart-section">
-                      <Button style={{ width: "95%", margin: "0 10px" }}>
+                    <Link
+                      to="/cart-section"
+                      style={{
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <Button
+                        style={{
+                          width: "95%",
+                          margin: "0 10px",
+                          position: "sticky",
+                          bottom: 0,
+                          left: 0,
+                          fontWeight: "900",
+                        }}
+                      >
                         Go To Cart
                       </Button>
                     </Link>

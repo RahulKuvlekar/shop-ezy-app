@@ -8,6 +8,7 @@ const HomeBody = () => {
   const { products, sortBy, byStock, byFastDelivery, byRating, searchQuery } =
     useCustomContext();
 
+  // console.log(products, "=> homeBody");
   const filterProducts = () => {
     let filteredProducts = products;
 

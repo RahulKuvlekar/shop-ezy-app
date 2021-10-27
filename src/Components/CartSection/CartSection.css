@@ -20,7 +20,14 @@
   margin: 10px 10px 0 10px;
   height: 88vh;
 }
+.cartSidebar__priceInfo {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
 .goback__btn {
   color: blue !important;
   text-decoration: underline !important;
+  width: 100%;
+  text-align: center;
 }

@@ -1,3 +1,8 @@
+.singleProduct__body {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+}
 .singleProduct {
   width: 30%;
   margin: 0.7rem;

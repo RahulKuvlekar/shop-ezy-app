@@ -9,14 +9,31 @@ const SingleProduct = ({ product }) => {
   const { cart, dispatchCart } = useCustomContext();
   return (
     <Card className="singleProduct">
-      <Card.Img variant="top" src={product.image} alt={product.name} />
+      <div
+        style={{
+          height: "260px",
+          display: "flex",
+          alignItems: "center",
+          objectFit: "cover",
+        }}
+      >
+        <Card.Img
+          style={{
+            maxHeight: "100%",
+            objectFit: "contain",
+          }}
+          variant="top"
+          src={product.image}
+          alt={product.name}
+        />
+      </div>
       <Card.Body className="singleProduct__body">
         <Card.Title>{product.name}</Card.Title>
         <Card.Subtitle className="singleProduct__info">
-          <span>₹{product.price}</span>
+          <span style={{ fontWeight: "700" }}>₹{product.price}</span>
           <br />
-          <span>
-            {product.fastDelivery ? "Fast Delivery" : "4 days Delivery "}
+          <span style={{ opacity: "0.4" }}>
+            {product.fastDelivery ? "Fast Delivery" : "Upto 7 days Delivery "}
           </span>
           <br />
           <Rating rating={product.ratings} />

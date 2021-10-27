@@ -27,15 +27,9 @@ const CartSection = () => {
       <div className="cart__container">
         <ListGroup>
           {cart.length === 0 && (
-            <>
-              <h1>Cart Is Empty</h1>
-              <Link
-                className="goback__btn"
-                to="/"
-              >
-                Go Back to Home Page
-              </Link>
-            </>
+            <h1 style={{ width: "100%", textAlign: "center" }}>
+              Cart Is Empty
+            </h1>
           )}
           {cart.map((product) => (
             <ListGroup.Item key={product.id}>
@@ -102,17 +96,22 @@ const CartSection = () => {
               </Row>
             </ListGroup.Item>
           ))}
+          <Link className="goback__btn" to="/">
+            {cart.length === 0 ? "Go Back to Home Page" : " Add More Items"}
+          </Link>
         </ListGroup>
       </div>
       <div className="cartSidebar__section">
         <h1 className="cartSidebar__title">Filter Products</h1>
         <hr />
-        <span className="title">Subtotal ({cart.length}) items</span>
+        <span style={{ margin: ".5rem 0" }} className="title">
+          Subtotal ({cart.length}) items
+        </span>
         {cart.length > 0 && (
-          <>
+          <div className="cartSidebar__priceInfo">
             <hr />
             {cart?.map((product, idx) => (
-              <span key={idx}>
+              <span style={{ display: "block" }} key={idx}>
                 {product.name}
                 <br />(<span> ₹ {product.price} </span>
                 <strong>X</strong>
@@ -120,7 +119,7 @@ const CartSection = () => {
               </span>
             ))}
             <hr />
-          </>
+          </div>
         )}
         <span style={{ fontWeight: 700, fontSize: 20 }}>
           Total: ₹ {totalAmount}
