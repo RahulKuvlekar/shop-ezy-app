@@ -1,0 +1,8 @@
+.singleProduct {
+  width: 30%;
+  margin: 0.7rem;
+}
+
+.singleProduct__info {
+  padding-bottom: 0.7rem;
+}
