@@ -2,10 +2,21 @@ import React, { createContext, useReducer, useState, useEffect } from "react";
 import CartReducer from "./CartReducer";
 import faker from "faker";
 import FilterReducer from "./FilterReducer";
+import AddressReducer from "./AddressReducer";
 import db from "../Config/Firebase-Init";
+import { auth } from "../Config/Firebase-Init";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 
 export const Context = createContext({
   user: null,
+  userAddress: "",
   products: [],
   cart: [],
   dispatchCart: () => {},
@@ -15,12 +26,17 @@ export const Context = createContext({
   byRating: 0,
   searchQuery: "",
   dispatchFilter: () => {},
+  dispatchAddress: () => {},
+  signInWithGoogle: () => Promise,
+  signOutUser: () => Promise,
+  createNewAccount: () => Promise,
+  signInToAccount: () => Promise,
 });
 faker.seed(89);
 
 const ContextProvider = (props) => {
   const [products, setProducts] = useState([]);
-
+  const [currentUser, setCurrentUser] = useState(null);
   // const products = [...Array(20)].map(() => ({
   //   id: faker.datatype.uuid(),
   //   name: faker.commerce.productName(),
@@ -42,12 +58,12 @@ const ContextProvider = (props) => {
       )
     );
   };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const [cart, dispatchCart] = useReducer(CartReducer, {
     cartList: [],
+  });
+  const [address, dispatchAddress] = useReducer(AddressReducer, {
+    userAddress: "",
   });
 
   const [filter, dispatchFilter] = useReducer(FilterReducer, {
@@ -60,18 +76,55 @@ const ContextProvider = (props) => {
 
   // console.log("PRODUCTS ====> \n", firebaseProducts);
 
+  const createNewAccount = (email, pass) => {
+    return createUserWithEmailAndPassword(auth, email, pass);
+  };
+
+  const signInToAccount = (email, pass) => {
+    return signInWithEmailAndPassword(auth, email, pass);
+  };
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
+  const signOutUser = () => {
+    return signOut(auth);
+  };
+
   const DEFAULT_VALUE = {
-    user: null,
+    user: currentUser,
+    userAddress: address.userAddress,
     products: products,
     cart: cart.cartList,
     dispatchCart: dispatchCart,
     dispatchFilter: dispatchFilter,
+    dispatchAddress: dispatchAddress,
     sortBy: filter.sortBy,
     byStock: filter.byStock,
     byFastDelivery: filter.byFastDelivery,
     byRating: filter.byRating,
     searchQuery: filter.searchQuery,
+    signInWithGoogle,
+    signOutUser,
+    createNewAccount,
+    signInToAccount,
   };
+
+  useEffect(() => {
+    fetchProducts();
+    const unsubscribed = onAuthStateChanged(auth, (user) => {
+      console.log("AUTH CHANGED => ", user);
+      if (!user) {
+        dispatchAddress({
+          type: "CLEAR_ADDRESS",
+        });
+      }
+      return setCurrentUser(user ? user : null);
+    });
+    return () => unsubscribed();
+  }, []);
 
   return (
     <Context.Provider value={DEFAULT_VALUE}>{props.children}</Context.Provider>
