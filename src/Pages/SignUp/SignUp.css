@@ -1,0 +1,117 @@
+.signup__section {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signupForm__card {
+  max-width: 300px;
+  width: 90%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.signupForm__brandName {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 1.5rem;
+  text-align: left;
+  width: 100%;
+}
+.signupForm {
+  margin: 1rem 0;
+  text-align: left;
+}
+.signupForm label {
+  margin-bottom: 1rem;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.5);
+}
+.signupForm input {
+  width: 100%;
+  padding: 0.7rem 1.3rem;
+  margin: 0.3rem auto 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 0.6rem;
+  font-size: 1.2rem;
+}
+.signupForm input::placeholder {
+  opacity: 0.4;
+}
+.signupForm button {
+  margin: 1rem 0 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.3rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  background-color: #2195f3;
+  border: 1px solid white;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+
+.signupForm button:hover {
+  background-color: #2175f3;
+}
+
+.signupForm p {
+  text-align: center;
+  margin: 0.5rem 0;
+  color: rgba(0, 0, 0, 0.5);
+}
+.signupForm p a {
+  color: #2195f3;
+  margin: 0 0.3rem;
+  font-weight: 700;
+}
+
+.signupForm p a :hover {
+  color: #2175f3;
+}
+
+.btn-Google {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  background-color: #fff;
+  align-items: center;
+  padding: 0.3rem 1.2rem;
+  margin: auto;
+  border-radius: 3rem;
+  border: 1px solid black;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 60%),
+    inset 0 0 0 2px rgb(0 0 0 / 0%) inset 0 0 0 1px rgb(0 0 0 / 0);
+  vertical-align: middle;
+  z-index: 0;
+  transition-duration: 0.3s;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.btn-Google:hover {
+  background-color: rgba(207, 207, 207, 0.25);
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.btn-Google > img {
+  width: 2rem;
+  margin-right: 0.5rem;
+}
+
+.errorMsg {
+  text-align: left;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 1px solid red;
+  color: red;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}

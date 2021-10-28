@@ -9,6 +9,8 @@ const Home = () => {
   const CartSection = lazy(() =>
     import("../../Components/CartSection/CartSection")
   );
+  const Login = lazy(() => import("../Login/Login"));
+  const SignUp = lazy(() => import("../SignUp/SignUp"));
   return (
     <>
       <Router>
@@ -17,6 +19,8 @@ const Home = () => {
           <Switch>
             <Route exact path="/" component={HomeBody} />
             <Route exact path="/cart-section" component={CartSection} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={SignUp} />
           </Switch>
         </Suspense>
       </Router>
