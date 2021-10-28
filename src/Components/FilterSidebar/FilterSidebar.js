@@ -20,10 +20,13 @@ const FilterSidebar = () => {
     <div className="filterSidebar__section">
       <h1 className="filterSidebar__title">Filter Products</h1>
       <hr />
+      <label name="group1" style={{ padding: "0", fontWeight: "700" }}>
+        Price -{" "}
+      </label>
       <span>
         <Form.Check
           inline
-          label="Ascending"
+          label="Low To High"
           name="group1"
           type="radio"
           id={`inline-1`}
@@ -39,7 +42,7 @@ const FilterSidebar = () => {
       <span>
         <Form.Check
           inline
-          label="Descending"
+          label="High To Low"
           name="group1"
           type="radio"
           id={`inline-2`}
