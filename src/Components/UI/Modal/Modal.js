@@ -1,7 +1,7 @@
 import cssClasses from "./Modal.module.css";
 import ReactDOM from "react-dom";
 import React from "react";
-
+ 
 const Backdrop = (props) => {
   return (
     <div className={cssClasses.backdrop} onClick={props.onClick}>
