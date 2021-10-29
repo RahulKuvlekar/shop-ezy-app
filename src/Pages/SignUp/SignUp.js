@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { Card } from "react-bootstrap";
 import useCustomContext from "../../Hooks/UseCustomContext";
-import { auth } from "../../Config/Firebase-Init";
 import { updateProfile } from "@firebase/auth";
 
 const SignUp = () => {
-  const { signInWithGoogle, user, createNewAccount } = useCustomContext();
+  const { signInWithGoogle, user, createNewAccount, signOutUser } =
+    useCustomContext();
   const [error, setError] = useState({ state: false, message: null });
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const IS_INVALID = emailAddress === "" || password === "";
+  const history = useHistory();
+
   const SignUpHandler = (event) => {
     event.preventDefault();
     // console.log(IS_INVALID, emailAddress, password, username, "Sign up wala");
@@ -23,12 +25,16 @@ const SignUp = () => {
     setError({ state: false, message: "" });
     createNewAccount(emailAddress, password)
       .then((data) => {
-        updateProfile(auth.currentUser, { displayName: username })
-          .then((data) => {
+        updateProfile(data.user, { displayName: username })
+          .then(() => {
             console.log("username added Sucessfully");
           })
           .catch((error) => alert(error));
         console.log("Created New Account Sucessfully", data);
+        signOutUser()
+          .then(() => history.push("/login"))
+          .catch((error) => alert(error));
+        //fix: bug in f9 if we update/create user -> authState also changes
       })
       .catch((error) => alert(error));
     setEmailAddress("");
