@@ -4,64 +4,119 @@ import { AiFillDelete } from "react-icons/ai";
 import useCustomContext from "../../Hooks/UseCustomContext";
 import Rating from "../Rating/Rating";
 import "./CartSection.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import PersonalInfo from "../PersonalInfo/PersonalInfo";
+import Modal from "../UI/Modal/Modal";
 
 const CartSection = () => {
-  const { cart, dispatchCart } = useCustomContext();
+  const { cart, dispatchCart, userAddress } = useCustomContext();
   const [totalAmount, setTotalAmount] = React.useState(0);
+  const { user } = useCustomContext();
+  const [confirmModal, setConfirmModal] = React.useState(false);
+  // console.log(useCustomContext());
+  const history = useHistory();
+  const showConfirmModal = () => {
+    setConfirmModal(true);
+  };
+  const hideConfirmModal = () => {
+    setConfirmModal(false);
+  };
+
+  const confirmOrder = () => {
+    hideConfirmModal();
+    alert("CONGRATZZZ ORDER IS BEEN PLACE ");
+    history.push("/");
+    dispatchCart({
+      type: "CLEAR_CART",
+    });
+  };
 
   React.useEffect(() => {
     setTotalAmount(
       cart?.reduce((acc, curr) => acc + curr.price * curr.quantity, 0)
     );
   }, [cart]);
+
+  // console.log("CUSTOM CONTEXT API ", useCustomContext());
   return (
-    <div
-      style={{
-        marginTop: "5.5rem",
-        display: "flex",
-        flexFlow: "row wrap",
-        justifyContent: "space-between",
-      }}
-    >
-      <div className="cart__container">
-        <ListGroup>
-          {cart.length === 0 && (
-            <h1 style={{ width: "100%", textAlign: "center" }}>
-              Cart Is Empty
-            </h1>
-          )}
-          {cart.map((product) => (
-            <ListGroup.Item key={product.id}>
-              <Row>
-                <Col md={2}>
-                  <Image src={product.image} alt={product.name} fluid rounded />
-                </Col>
-                <Col md={2}>
-                  <span>{product.name}</span>
-                </Col>
-                <Col md={2}>₹ {product.price}</Col>
-                <Col md={2}>
-                  <Rating rating={product.ratings} />
-                </Col>
-                <Col md={2}>
-                  <Form.Select
-                    value={product.quantity}
-                    onChange={(event) =>
-                      dispatchCart({
-                        type: "CHANGE_CART_QTY",
-                        payload: {
-                          id: product.id,
-                          quantity: Number(event.target.value),
-                        },
-                      })
-                    }
-                  >
-                    {[...Array(product.inStock)].map((data, idx) => (
-                      <option key={idx + 1}>{idx + 1}</option>
-                    ))}
-                  </Form.Select>
-                  {/* <Form.Control
+    <>
+      {user === null && <Redirect to="/login" />}
+      {confirmModal && (
+        <Modal onHideCart={hideConfirmModal}>
+          <div className="confirmOrder__Modal">
+            <div className="order__details">
+              <h5>Order details -</h5>
+              <hr />
+              {cart?.map((product, idx) => (
+                <span style={{ display: "block" }} key={idx}>
+                  {product.name}
+                  <br />(<span> ₹ {product.price} </span>
+                  <strong>X</strong>
+                  <span> {product.quantity} </span>)
+                </span>
+              ))}
+              <hr />
+              <h5>TOTAL AMOUNT - ₹ {totalAmount}</h5>
+            </div>
+            <div className="buttons">
+              <button onClick={() => hideConfirmModal()}>Cancel</button>
+              <button onClick={confirmOrder}>confirm</button>
+            </div>
+          </div>
+        </Modal>
+      )}
+      <div
+        style={{
+          marginTop: "5.5rem",
+          display: "flex",
+          flexFlow: "row wrap",
+          justifyContent: "space-between",
+        }}
+      >
+        <div className="cart__container">
+          <ListGroup>
+            <PersonalInfo />
+            {cart.length === 0 && (
+              <h1 style={{ width: "100%", textAlign: "center" }}>
+                Cart Is Empty
+              </h1>
+            )}
+            {cart.map((product) => (
+              <ListGroup.Item key={product.id}>
+                <Row>
+                  <Col md={2}>
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fluid
+                      rounded
+                    />
+                  </Col>
+                  <Col md={2}>
+                    <span>{product.name}</span>
+                  </Col>
+                  <Col md={2}>₹ {product.price}</Col>
+                  <Col md={2}>
+                    <Rating rating={product.ratings} />
+                  </Col>
+                  <Col md={2}>
+                    <Form.Select
+                      value={product.quantity}
+                      onChange={(event) =>
+                        dispatchCart({
+                          type: "CHANGE_CART_QTY",
+                          payload: {
+                            id: product.id,
+                            quantity: Number(event.target.value),
+                          },
+                        })
+                      }
+                    >
+                      {[...Array(product.inStock)].map((data, idx) => (
+                        <option key={idx + 1}>{idx + 1}</option>
+                      ))}
+                    </Form.Select>
+                    {/* <Form.Control
                     as="select"
                     value={product.qty}
                     onChange={(e) =>
@@ -78,55 +133,70 @@ const CartSection = () => {
                       <option key={x + 1}>{x + 1}</option>
                     ))}
                   </Form.Control> */}
-                </Col>
-                <Col md={2}>
-                  <Button
-                    type="button"
-                    variant="light"
-                    onClick={() =>
-                      dispatchCart({
-                        type: "REMOVE_FROM_CART",
-                        payload: product,
-                      })
-                    }
-                  >
-                    <AiFillDelete fontSize="20px" />
-                  </Button>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-          <Link className="goback__btn" to="/">
-            {cart.length === 0 ? "Go Back to Home Page" : " Add More Items"}
-          </Link>
-        </ListGroup>
-      </div>
-      <div className="cartSidebar__section">
-        <h1 className="cartSidebar__title">Filter Products</h1>
-        <hr />
-        <span style={{ margin: ".5rem 0" }} className="title">
-          Subtotal ({cart.length}) items
-        </span>
-        {cart.length > 0 && (
-          <div className="cartSidebar__priceInfo">
-            <hr />
-            {cart?.map((product, idx) => (
-              <span style={{ display: "block" }} key={idx}>
-                {product.name}
-                <br />(<span> ₹ {product.price} </span>
-                <strong>X</strong>
-                <span> {product.quantity} </span>)
-              </span>
+                  </Col>
+                  <Col md={2}>
+                    <Button
+                      type="button"
+                      variant="light"
+                      onClick={() =>
+                        dispatchCart({
+                          type: "REMOVE_FROM_CART",
+                          payload: product,
+                        })
+                      }
+                    >
+                      <AiFillDelete fontSize="20px" />
+                    </Button>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
             ))}
-            <hr />
-          </div>
-        )}
-        <span style={{ fontWeight: 700, fontSize: 20 }}>
-          Total: ₹ {totalAmount}
-        </span>
-        <br />
+            <Link className="goback__btn" to="/">
+              {cart.length === 0 ? "Go Back to Home Page" : " Add More Items"}
+            </Link>
+            <Button
+              variant="primary"
+              style={{ fontWeight: "800" }}
+              onClick={() => {
+                if (userAddress.trim() === "") {
+                  alert("PLEASE ADD THE ADDRESS FIRST");
+                  return;
+                }
+                showConfirmModal();
+              }}
+              disabled={cart.length === 0}
+            >
+              {cart.length === 0 ? "Cart is Empty" : " Confirm Order"}
+            </Button>
+          </ListGroup>
+        </div>
+        <div className="cartSidebar__section">
+          <h1 className="cartSidebar__title">Filter Products</h1>
+          <hr />
+          <span style={{ margin: ".5rem 0" }} className="title">
+            Subtotal ({cart.length}) items
+          </span>
+          {cart.length > 0 && (
+            <div className="cartSidebar__priceInfo">
+              <hr />
+              {cart?.map((product, idx) => (
+                <span style={{ display: "block" }} key={idx}>
+                  {product.name}
+                  <br />(<span> ₹ {product.price} </span>
+                  <strong>X</strong>
+                  <span> {product.quantity} </span>)
+                </span>
+              ))}
+              <hr />
+            </div>
+          )}
+          <span style={{ fontWeight: 700, fontSize: 20 }}>
+            Total: ₹ {totalAmount}
+          </span>
+          <br />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
