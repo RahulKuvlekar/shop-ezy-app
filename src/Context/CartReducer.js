@@ -22,6 +22,11 @@ const CartReducer = (prevState, action) => {
             : product.quantity
         ),
       };
+    case "CLEAR_CART":
+      return {
+        ...prevState,
+        cartList: [],
+      };
     default:
       return prevState;
   }
