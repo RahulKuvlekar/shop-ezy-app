@@ -19,3 +19,11 @@
   padding: 0 20px;
   flex-direction: column;
 }
+
+.avatar_toggle.dropdown-toggle::after {
+  content: none;
+}
+.dropdown-menu > a.dropdown-item:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: whites;
+}

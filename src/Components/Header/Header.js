@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Dropdown from "react-bootstrap/Dropdown";
+import { Dropdown } from "react-bootstrap";
 // import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import { Badge, Container, Button } from "react-bootstrap";
@@ -10,11 +10,17 @@ import { Link } from "react-router-dom";
 import useCustomContext from "../../Hooks/UseCustomContext";
 import { AiFillDelete } from "react-icons/ai";
 import "./Header.css";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Header = () => {
-  const { cart, dispatchCart, dispatchFilter, searchQuery } =
+  const { cart, dispatchCart, dispatchFilter, searchQuery, signOutUser, user } =
     useCustomContext();
+  const history = useHistory();
+  let location = useLocation();
   //   console.log(searchQuery);
+  // console.log(location, "Pathname locatiin");
+  // console.log(location.pathname.includes("login"));
+
   return (
     <>
       <Navbar
@@ -27,6 +33,12 @@ const Header = () => {
           left: "0",
           width: "100%",
           zIndex: "999",
+          display: `${
+            location.pathname.includes("login") ||
+            location.pathname.includes("signup")
+              ? "none"
+              : "unset"
+          }`,
         }}
       >
         <Container>
@@ -57,7 +69,73 @@ const Header = () => {
             />
           </Navbar.Text>
           <Nav>
-            <Dropdown align="end">
+            <Dropdown align="end" autoClose={true}>
+              <Dropdown.Toggle
+                className="avatar_toggle"
+                style={{
+                  padding: "0",
+                  margin: "0",
+                  display: "flex",
+                  flexFlow: "column wrap",
+                  alignItems: "center",
+                }}
+                variant="dark"
+                // id="dropdown-basic"
+              >
+                <img
+                  style={{ width: "3rem", height: "3rem", borderRadius: "50%" }}
+                  src={`${
+                    user?.photoURL ? user?.photoURL : "/Images/user.svg"
+                  }`}
+                  alt="avatar"
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {!user && (
+                  <>
+                    <Dropdown.Item
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                      onClick={() => history.push("/login")}
+                    >
+                      Login
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                      onClick={() => history.push("/signup")}
+                    >
+                      Create New Account
+                    </Dropdown.Item>
+                  </>
+                )}
+                {/* <Link to="/login">Login</Link> */}
+                {user && (
+                  <>
+                    <Dropdown.Item style={{ fontWeight: "800" }}>
+                      <span style={{ opacity: "0.8" }}>Welcome,</span>{" "}
+                      {user?.displayName}
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                      onClick={() => {
+                        signOutUser()
+                          .then(() => {
+                            console.log("SIGNOUT");
+                            history.push("/");
+                          })
+                          .catch((error) => alert(error));
+                      }}
+                    >
+                      LogOut
+                    </Dropdown.Item>
+                  </>
+                )}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Nav>
+
+          <Nav>
+            <Dropdown align="end" autoClose={true}>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 <MdShoppingCart fontSize="2rem" />
                 {cart?.length > 0 && <Badge bg="danger">{cart?.length}</Badge>}
@@ -98,9 +176,6 @@ const Header = () => {
                       </span>
                     ))}
 
-                    <Link to="/cart-section">go to cart</Link>
-
-                    <Link to="/">go to home</Link>
                     <Link
                       to="/cart-section"
                       style={{
@@ -122,7 +197,11 @@ const Header = () => {
                     </Link>
                   </>
                 ) : (
-                  <span style={{ padding: 10 }}>Cart is Empty!</span>
+                  <span
+                    style={{ padding: 10, fontWeight: "800", color: "red" }}
+                  >
+                    Cart is Empty!
+                  </span>
                 )}
               </Dropdown.Menu>
             </Dropdown>
