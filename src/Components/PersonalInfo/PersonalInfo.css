@@ -1,0 +1,19 @@
+.PersonalInfo__section {
+  border: 2px solid black;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.Address__Modal label,
+.Address__Modal textarea,
+.previous__address {
+  width: 100%;
+  display: block;
+}
+
+.previous__address {
+  opacity: 0.4;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
