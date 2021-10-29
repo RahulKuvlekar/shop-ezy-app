@@ -79,7 +79,10 @@ const SignUp = () => {
 
             <button type="submit"> Sign Up</button>
             <p>
-              Already a member?<Link to={"/login"}>Login</Link>
+              Already a member?
+              <Link className="btn-redirect" to={"/login"}>
+                Login
+              </Link>
             </p>
             {error.state && <div className="errorMsg">{error.message}</div>}
           </form>

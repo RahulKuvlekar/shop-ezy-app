@@ -75,6 +75,16 @@
   color: #2175f3;
 }
 
+.btn-redirect {
+  text-decoration: underline !important;
+  color: #2195f3 !important;
+  margin: 0 0.3rem;
+  font-weight: 700;
+}
+.btn-redirect:hover {
+  color: #2175f3 !important;
+}
+
 .btn-Google {
   display: flex;
   width: 100%;

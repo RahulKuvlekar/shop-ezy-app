@@ -55,7 +55,10 @@ const Login = () => {
             {/* <Link to="/cart-section">LINK BTN</Link> */}
             <button type="submit"> Login</button>
             <p>
-              Not a member?<Link to={"/signup"}>Signup</Link>
+              Not a member?
+              <Link className="btn-redirect" to={"/signup"}>
+                Signup
+              </Link>
             </p>
             {error.state && <div className="errorMsg">{error.message}</div>}
           </form>
