@@ -3,6 +3,7 @@ import Header from "../../Components/Header/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { lazy } from "react";
 import ImageLoader from "../../Components/UI/ImageLoader/ImageLoader";
+import Toast from "../../Components/UI/Toast/Toast";
 
 const Home = () => {
   const HomeBody = lazy(() => import("../../Components/HomeBody/HomeBody"));
@@ -15,6 +16,7 @@ const Home = () => {
     <>
       <Router>
         <Suspense fallback={<ImageLoader />}>
+          <Toast position="top-left" autoDeleteInterval="4000" />
           <Header />
           <Switch>
             <Route exact path="/" component={HomeBody} />

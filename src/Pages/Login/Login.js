@@ -3,10 +3,13 @@ import { Card } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
 import "./Login.css";
 import useCustomContext from "../../Hooks/UseCustomContext";
+import { v4 as uuidv4 } from "uuid";
 
 const Login = () => {
   // console.log("Login Component => Intialised");
-  const { signInWithGoogle, user, signInToAccount } = useCustomContext();
+  const { signInWithGoogle, user, signInToAccount, dispatchToast } =
+    useCustomContext();
+  // console.log("Context API", useCustomContext());
   const [error, setError] = useState({ state: false, message: null });
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -22,6 +25,15 @@ const Login = () => {
     signInToAccount(emailAddress, password)
       .then(() => {
         console.log("SIGN IN to New Account Sucessfully", user);
+        dispatchToast({
+          type: "ADD_NOTIFICATION",
+          payload: {
+            id: uuidv4(),
+            type: "SUCCESS",
+            title: "Login Successfully",
+            message: "You are been Logout.Thank You",
+          },
+        });
       })
       .catch((error) => alert(error));
     setEmailAddress("");
@@ -69,6 +81,15 @@ const Login = () => {
                 .then(({ user }) => {
                   console.log("USER SIGN-In GOOGLE ", user);
                   // history.push("./cart-section");
+                  dispatchToast({
+                    type: "ADD_NOTIFICATION",
+                    payload: {
+                      id: uuidv4(),
+                      type: "SUCCESS",
+                      title: "Login Successfully",
+                      message: "You are been Login.Thank You",
+                    },
+                  });
                 })
                 .catch((error) => alert("ERROR => ", error));
             }}

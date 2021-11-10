@@ -7,9 +7,10 @@ import "./CartSection.css";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import PersonalInfo from "../PersonalInfo/PersonalInfo";
 import Modal from "../UI/Modal/Modal";
+import { v4 as uuidv4 } from "uuid";
 
 const CartSection = () => {
-  const { cart, dispatchCart, userAddress } = useCustomContext();
+  const { cart, dispatchCart, userAddress, dispatchToast } = useCustomContext();
   const [totalAmount, setTotalAmount] = React.useState(0);
   const { user } = useCustomContext();
   const [confirmModal, setConfirmModal] = React.useState(false);
@@ -24,10 +25,18 @@ const CartSection = () => {
 
   const confirmOrder = () => {
     hideConfirmModal();
-    alert("CONGRATZZZ ORDER IS BEEN PLACE ");
     history.push("/");
     dispatchCart({
       type: "CLEAR_CART",
+    });
+    dispatchToast({
+      type: "ADD_NOTIFICATION",
+      payload: {
+        id: uuidv4(),
+        type: "SUCCESS",
+        title: "Order place Successfully",
+        message: "CONGRATZZZ ORDER IS BEEN PLACE ",
+      },
     });
   };
 
@@ -58,9 +67,9 @@ const CartSection = () => {
               <hr />
               <h5>TOTAL AMOUNT - ₹ {totalAmount}</h5>
             </div>
-            <div className="buttons">
+            <div className="modal__btns">
               <button onClick={() => hideConfirmModal()}>Cancel</button>
-              <button onClick={confirmOrder}>confirm</button>
+              <button onClick={confirmOrder}>Confirm</button>
             </div>
           </div>
         </Modal>
@@ -159,7 +168,15 @@ const CartSection = () => {
               style={{ fontWeight: "800" }}
               onClick={() => {
                 if (userAddress.trim() === "") {
-                  alert("PLEASE ADD THE ADDRESS FIRST");
+                  dispatchToast({
+                    type: "ADD_NOTIFICATION",
+                    payload: {
+                      id: uuidv4(),
+                      type: "WARNING",
+                      title: "Please Add the Address",
+                      message: "Add the Address",
+                    },
+                  });
                   return;
                 }
                 showConfirmModal();

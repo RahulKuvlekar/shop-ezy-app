@@ -5,6 +5,7 @@ import FilterReducer from "./FilterReducer";
 import AddressReducer from "./AddressReducer";
 import db from "../Config/Firebase-Init";
 import { auth } from "../Config/Firebase-Init";
+import toastReducer from "./toastReducer";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -16,6 +17,7 @@ import {
 
 export const Context = createContext({
   user: null,
+  toast: [],
   userAddress: "",
   products: [],
   cart: [],
@@ -25,6 +27,7 @@ export const Context = createContext({
   byFastDelivery: false,
   byRating: 0,
   searchQuery: "",
+  dispatchToast: () => {},
   dispatchFilter: () => {},
   dispatchAddress: () => {},
   signInWithGoogle: () => Promise,
@@ -74,6 +77,7 @@ const ContextProvider = (props) => {
     searchQuery: "",
   });
 
+  const [stateToast, dispatchToast] = useReducer(toastReducer, []);
   // console.log("PRODUCTS ====> \n", firebaseProducts);
 
   const createNewAccount = (email, pass) => {
@@ -98,6 +102,8 @@ const ContextProvider = (props) => {
     userAddress: address.userAddress,
     products: products,
     cart: cart.cartList,
+    toast: stateToast,
+    dispatchToast: dispatchToast,
     dispatchCart: dispatchCart,
     dispatchFilter: dispatchFilter,
     dispatchAddress: dispatchAddress,

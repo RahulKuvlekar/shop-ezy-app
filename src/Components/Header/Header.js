@@ -11,10 +11,18 @@ import useCustomContext from "../../Hooks/UseCustomContext";
 import { AiFillDelete } from "react-icons/ai";
 import "./Header.css";
 import { useHistory, useLocation } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const Header = () => {
-  const { cart, dispatchCart, dispatchFilter, searchQuery, signOutUser, user } =
-    useCustomContext();
+  const {
+    cart,
+    dispatchCart,
+    dispatchFilter,
+    searchQuery,
+    signOutUser,
+    user,
+    dispatchToast,
+  } = useCustomContext();
   const history = useHistory();
   let location = useLocation();
   //   console.log(searchQuery);
@@ -122,6 +130,15 @@ const Header = () => {
                           .then(() => {
                             console.log("SIGNOUT");
                             history.push("/");
+                            dispatchToast({
+                              type: "ADD_NOTIFICATION",
+                              payload: {
+                                id: uuidv4(),
+                                type: "SUCCESS",
+                                title: "Logout Successfully",
+                                message: "You are been Logout.Thank You",
+                              },
+                            });
                           })
                           .catch((error) => alert(error));
                       }}
