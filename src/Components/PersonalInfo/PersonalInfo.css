@@ -17,3 +17,29 @@
   padding: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
+
+.PersonalInfo__section__btns {
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin: 1rem 0;
+}
+.PersonalInfo__section__btns button {
+  background-color: #428855;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid white;
+  border-radius: 1rem;
+  padding: 0.8rem 1.8rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+.PersonalInfo__section__btns button:hover {
+  background-color: #32b156;
+}
+.PersonalInfo__section__btns button:disabled {
+  background-color: #42885563;
+}

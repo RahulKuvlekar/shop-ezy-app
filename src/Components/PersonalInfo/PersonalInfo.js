@@ -32,7 +32,7 @@ const PersonalInfo = () => {
             )}
             <label htmlFor="input_address">Enter Address</label>
             <textarea id="input_address" type="text" ref={addressInputRef} />
-            <div className="buttons">
+            <div className="modal__btns">
               <button
                 onClick={() => {
                   hideAddressModal();
@@ -41,8 +41,10 @@ const PersonalInfo = () => {
               >
                 Cancel
               </button>
-
               <button
+                disabled={
+                  addressInputRef?.current?.value?.trim() === "" ? true : false
+                }
                 onClick={(event) => {
                   dispatchAddress({
                     type: "ADD_ADDRESS",
@@ -52,7 +54,7 @@ const PersonalInfo = () => {
                   hideAddressModal();
                 }}
               >
-                confirm
+                Confirm
               </button>
             </div>
           </div>
@@ -66,10 +68,12 @@ const PersonalInfo = () => {
           Address:-
           {userAddress && <span>{userAddress}</span>}
         </h4>
-        <button onClick={showAddressModal}>
-          {userAddress ? "Change Address" : "Add Address"}
-        </button>
-        <button>order history</button>
+        <div className="PersonalInfo__section__btns">
+          <button onClick={showAddressModal}>
+            {userAddress ? "Change Address" : "Add Address"}
+          </button>
+          <button disabled={true}>order history</button>
+        </div>
       </section>
     </>
   );
