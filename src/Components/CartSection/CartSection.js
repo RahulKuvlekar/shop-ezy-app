@@ -188,7 +188,7 @@ const CartSection = () => {
           </ListGroup>
         </div>
         <div className="cartSidebar__section">
-          <h1 className="cartSidebar__title">Filter Products</h1>
+          <h1 className="cartSidebar__title">PRICE DETAILS</h1>
           <hr />
           <span style={{ margin: ".5rem 0" }} className="title">
             Subtotal ({cart.length}) items
