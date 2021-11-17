@@ -34,12 +34,22 @@ export const Context = createContext({
   signOutUser: () => Promise,
   createNewAccount: () => Promise,
   signInToAccount: () => Promise,
+  loginAsGuest: () => {},
 });
 faker.seed(89);
 
 const ContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
+  const GUEST_ID = {
+    displayName: "Guest User",
+    email: "MrGuestUser@gmail.com",
+    phoneNumber: "007007007",
+    photoURL:
+      "https://upload.wikimedia.org/wikipedia/en/thumb/4/41/Flag_of_India.svg/50px-Flag_of_India.svg.png",
+    providerId: "Guest",
+    uid: "GuestUserKJ3yeHZW7Yalvm0Skmo4As7o2S73GuestUser",
+  };
   // const products = [...Array(20)].map(() => ({
   //   id: faker.datatype.uuid(),
   //   name: faker.commerce.productName(),
@@ -97,6 +107,10 @@ const ContextProvider = (props) => {
     return signOut(auth);
   };
 
+  const loginAsGuest = () => {
+    setCurrentUser(GUEST_ID);
+  };
+
   const DEFAULT_VALUE = {
     user: currentUser,
     userAddress: address.userAddress,
@@ -116,6 +130,7 @@ const ContextProvider = (props) => {
     signOutUser,
     createNewAccount,
     signInToAccount,
+    loginAsGuest,
   };
 
   useEffect(() => {

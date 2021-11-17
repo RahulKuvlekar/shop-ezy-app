@@ -7,8 +7,13 @@ import { v4 as uuidv4 } from "uuid";
 
 const Login = () => {
   // console.log("Login Component => Intialised");
-  const { signInWithGoogle, user, signInToAccount, dispatchToast } =
-    useCustomContext();
+  const {
+    signInWithGoogle,
+    user,
+    signInToAccount,
+    dispatchToast,
+    loginAsGuest,
+  } = useCustomContext();
   // console.log("Context API", useCustomContext());
   const [error, setError] = useState({ state: false, message: null });
   const [emailAddress, setEmailAddress] = useState("");
@@ -74,6 +79,25 @@ const Login = () => {
             </p>
             {error.state && <div className="errorMsg">{error.message}</div>}
           </form>
+          <button
+            className="btn-Google"
+            style={{ marginBottom: "1rem" }}
+            onClick={() => {
+              loginAsGuest();
+              dispatchToast({
+                type: "ADD_NOTIFICATION",
+                payload: {
+                  id: uuidv4(),
+                  type: "SUCCESS",
+                  title: "Login Successfully Guest",
+                  message: "You are been Login.Thank You",
+                },
+              });
+            }}
+          >
+            <img src="/images/user.svg" alt="user-logo" />
+            Login as GuestUser
+          </button>
           <button
             className="btn-Google"
             onClick={() => {
