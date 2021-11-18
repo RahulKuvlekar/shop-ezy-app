@@ -72,15 +72,20 @@ const CartSection = () => {
             <div className="order__details">
               <h3>Order details -</h3>
               <hr />
-              {cart?.map((product, idx) => (
-                <span style={{ display: "block" }} key={idx}>
-                  {product.name}
-                  <br />(<span> ₹ {product.price} </span>
-                  <strong>X</strong>
-                  <span> {product.quantity} </span>)
-                </span>
-              ))}
+              <div className="order__description">
+                {cart?.map((product, idx) => (
+                  <span style={{ display: "block" }} key={idx}>
+                    {product.name}
+                    <br />(<span> ₹ {product.price} </span>
+                    <strong>X</strong>
+                    <span> {product.quantity} </span>)
+                  </span>
+                ))}
+              </div>
               <hr />
+            </div>
+            <div className="order__paymentMode">
+              {" "}
               <h5>
                 <label
                   style={{
@@ -105,9 +110,8 @@ const CartSection = () => {
                   <option value="Online Banking">Online Banking</option>
                 </select>
               </h5>
-              <hr />
-              <h5>TOTAL AMOUNT - ₹ {totalAmount}</h5>
             </div>
+            <h5>TOTAL AMOUNT - ₹ {totalAmount}</h5>
             <div className="modal__btns">
               <button onClick={() => hideConfirmModal()}>Cancel</button>
               <button onClick={confirmOrder}>Confirm</button>

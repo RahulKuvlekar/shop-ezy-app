@@ -25,6 +25,10 @@
   overflow-x: hidden;
   overflow-y: scroll;
 }
+.order__description {
+  max-height: 300px;
+  overflow: scroll;
+}
 .goback__btn {
   color: blue !important;
   text-decoration: underline !important;
