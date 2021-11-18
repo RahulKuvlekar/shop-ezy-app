@@ -119,9 +119,28 @@ const Header = () => {
                 {/* <Link to="/login">Login</Link> */}
                 {user && (
                   <>
-                    <Dropdown.Item style={{ fontWeight: "800" }}>
+                    <Dropdown.Item
+                      className="no-btn"
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                    >
                       <span style={{ opacity: "0.8" }}>Welcome,</span>{" "}
                       {user?.displayName}
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                      onClick={() => {
+                        history.push("/");
+                      }}
+                    >
+                      Home
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      style={{ fontWeight: "800", opacity: "0.8" }}
+                      onClick={() => {
+                        history.push("/order-history");
+                      }}
+                    >
+                      My Orders
                     </Dropdown.Item>
                     <Dropdown.Item
                       style={{ fontWeight: "800", opacity: "0.8" }}

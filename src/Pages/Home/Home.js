@@ -12,6 +12,8 @@ const Home = () => {
   );
   const Login = lazy(() => import("../Login/Login"));
   const SignUp = lazy(() => import("../SignUp/SignUp"));
+  const OrderHistory = lazy(() => import("../OrderHistory/OrderHistory"));
+
   return (
     <>
       <Router>
@@ -23,6 +25,7 @@ const Home = () => {
             <Route exact path="/cart-section" component={CartSection} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
+            <Route exact path="/order-history" component={OrderHistory} />
           </Switch>
         </Suspense>
       </Router>

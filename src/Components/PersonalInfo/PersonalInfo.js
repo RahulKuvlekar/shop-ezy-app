@@ -4,11 +4,13 @@ import useCustomContext from "../../Hooks/UseCustomContext";
 // import { auth } from "../../Config/Firebase-Init";
 // import { updateProfile } from "@firebase/auth";
 import Modal from "../UI/Modal/Modal";
+import { useHistory } from "react-router";
 
-const PersonalInfo = () => {
+const PersonalInfo = (props) => {
   const { user, userAddress, dispatchAddress } = useCustomContext();
   const addressInputRef = React.useRef();
   const [addressModal, setAddressModal] = React.useState(false);
+  const history = useHistory();
   //   console.log(address);
 
   const showAddressModal = () => {
@@ -72,7 +74,15 @@ const PersonalInfo = () => {
           <button onClick={showAddressModal}>
             {userAddress ? "Change Address" : "Add Address"}
           </button>
-          <button disabled={true}>order history</button>
+          {props.disabledOrderBtn && (
+            <button
+              onClick={() => {
+                history.push("/order-history");
+              }}
+            >
+              order history
+            </button>
+          )}
         </div>
       </section>
     </>

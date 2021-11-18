@@ -7,12 +7,14 @@ import "./CartSection.css";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import PersonalInfo from "../PersonalInfo/PersonalInfo";
 import Modal from "../UI/Modal/Modal";
+import db from "../../Config/Firebase-Init";
+import firebase from "@firebase/app-compat";
 import { v4 as uuidv4 } from "uuid";
 
 const CartSection = () => {
-  const { cart, dispatchCart, userAddress, dispatchToast } = useCustomContext();
+  const { user, cart, dispatchCart, userAddress, dispatchToast } =
+    useCustomContext();
   const [totalAmount, setTotalAmount] = React.useState(0);
-  const { user } = useCustomContext();
   const [confirmModal, setConfirmModal] = React.useState(false);
   // console.log(useCustomContext());
   const history = useHistory();
@@ -24,7 +26,12 @@ const CartSection = () => {
   };
 
   const confirmOrder = () => {
-    hideConfirmModal();
+    db.collection("users").doc(user.uid).collection("orders").add({
+      items: cart,
+      timestamp: firebase.firestore.Timestamp.now(),
+      totalAmount,
+      userAddress,
+    });
     history.push("/");
     dispatchCart({
       type: "CLEAR_CART",
@@ -84,7 +91,7 @@ const CartSection = () => {
       >
         <div className="cart__container">
           <ListGroup>
-            <PersonalInfo />
+            <PersonalInfo disabledOrderBtn={true} />
             {cart.length === 0 && (
               <h1 style={{ width: "100%", textAlign: "center" }}>
                 Cart Is Empty
