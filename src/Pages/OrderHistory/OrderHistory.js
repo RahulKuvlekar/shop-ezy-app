@@ -70,6 +70,9 @@ const OrderHistory = () => {
             <div style={{ padding: "1rem" }}>
               OrderId - <b>{order.orderId}</b>
             </div>
+            <div style={{ padding: "1rem" }}>
+              Payment Mode - <b>{order.paymentMode}</b>
+            </div>
             <div className="btn-orange">
               Total Bill - <b> ₹{order?.totalAmount}</b>
             </div>

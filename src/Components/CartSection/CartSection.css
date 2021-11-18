@@ -36,7 +36,10 @@
 .goback__btn:hover {
   color: red !important;
 }
-
+#paymentMode {
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+}
 .modal__btns {
   display: flex;
   width: 100%;

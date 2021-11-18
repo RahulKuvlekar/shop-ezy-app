@@ -16,7 +16,10 @@ const CartSection = () => {
     useCustomContext();
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [confirmModal, setConfirmModal] = React.useState(false);
+  const [paymentMode, setPaymentMode] = React.useState("");
+  const [paymentError, setPaymentError] = React.useState(false);
   // console.log(useCustomContext());
+  console.log("Payment Mode ==> ", paymentMode);
   const history = useHistory();
   const showConfirmModal = () => {
     setConfirmModal(true);
@@ -26,11 +29,16 @@ const CartSection = () => {
   };
 
   const confirmOrder = () => {
+    if (paymentMode === "") {
+      setPaymentError(true);
+      return;
+    }
     db.collection("users").doc(user.uid).collection("orders").add({
       items: cart,
       timestamp: firebase.firestore.Timestamp.now(),
       totalAmount,
       userAddress,
+      paymentMode,
     });
     history.push("/");
     dispatchCart({
@@ -45,6 +53,7 @@ const CartSection = () => {
         message: "CONGRATZZZ ORDER IS BEEN PLACE ",
       },
     });
+    setPaymentError(false);
   };
 
   React.useEffect(() => {
@@ -61,7 +70,7 @@ const CartSection = () => {
         <Modal onHideCart={hideConfirmModal}>
           <div className="confirmOrder__Modal">
             <div className="order__details">
-              <h5>Order details -</h5>
+              <h3>Order details -</h3>
               <hr />
               {cart?.map((product, idx) => (
                 <span style={{ display: "block" }} key={idx}>
@@ -71,6 +80,31 @@ const CartSection = () => {
                   <span> {product.quantity} </span>)
                 </span>
               ))}
+              <hr />
+              <h5>
+                <label
+                  style={{
+                    fontWeight: `${paymentError ? "800" : "bold"}`,
+                    color: `${paymentError ? "red" : "black"}`,
+                  }}
+                  htmlFor="paymentMode"
+                >
+                  Select Payment Mode :
+                </label>
+                <select
+                  name="paymentMode"
+                  id="paymentMode"
+                  onChange={(event) => {
+                    setPaymentMode(event.target.value);
+                  }}
+                >
+                  <option value="">--Please choose an Payment Mode--</option>
+                  <option value="COD">COD</option>
+                  <option value="Paytm">Paytm</option>
+                  <option value="UPID">UPID</option>
+                  <option value="Online Banking">Online Banking</option>
+                </select>
+              </h5>
               <hr />
               <h5>TOTAL AMOUNT - ₹ {totalAmount}</h5>
             </div>
