@@ -39,6 +39,12 @@
   flex-flow: column wrap;
   justify-content: space-between;
 }
+.singleProduct__name:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  color: #fb641b;
+  cursor: pointer;
+}
 .singleProduct {
   width: 30%;
   margin: 0.7rem;

@@ -31,7 +31,14 @@ const SingleProduct = ({ product }) => {
         </button>
       </div>
       <Card.Body className="singleProduct__body">
-        <Card.Title>{product.name}</Card.Title>
+        <Card.Title
+          className="singleProduct__name"
+          onClick={() => {
+            history.push(`/product/${product.id}`);
+          }}
+        >
+          {product.name}
+        </Card.Title>
         <Card.Subtitle className="singleProduct__info">
           <span style={{ fontWeight: "700" }}>₹{product.price}</span>
           <br />
