@@ -8,10 +8,10 @@ import { useHistory } from "react-router";
 
 const PersonalInfo = (props) => {
   const { user, userAddress, dispatchAddress } = useCustomContext();
-  const addressInputRef = React.useRef();
+  const [addressInput, setAddressInput] = React.useState("");
   const [addressModal, setAddressModal] = React.useState(false);
   const history = useHistory();
-  //   console.log(address);
+  console.log("Address Input => ", addressInput);
 
   const showAddressModal = () => {
     setAddressModal(true);
@@ -33,26 +33,38 @@ const PersonalInfo = (props) => {
               </div>
             )}
             <label htmlFor="input_address">Enter Address</label>
-            <textarea id="input_address" type="text" ref={addressInputRef} />
+            <span
+              style={{
+                color: "rgba(0,0,0,0.5)",
+              }}
+            >
+              *(Address should be atleast of 10 characters)
+            </span>
+            <textarea
+              id="input_address"
+              type="text"
+              value={addressInput}
+              onChange={(event) => {
+                setAddressInput(event.target.value);
+              }}
+            />
             <div className="modal__btns">
               <button
                 onClick={() => {
                   hideAddressModal();
-                  addressInputRef.current.value = "";
+                  setAddressInput("");
                 }}
               >
                 Cancel
               </button>
               <button
-                disabled={
-                  addressInputRef?.current?.value?.trim() === "" ? true : false
-                }
+                disabled={addressInput?.trim().length <= 10 ? true : false}
                 onClick={(event) => {
                   dispatchAddress({
                     type: "ADD_ADDRESS",
-                    payload: addressInputRef.current.value.trim(),
+                    payload: addressInput.trim(),
                   });
-                  addressInputRef.current.value = "";
+                  setAddressInput("");
                   hideAddressModal();
                 }}
               >
