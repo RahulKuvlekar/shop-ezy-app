@@ -51,7 +51,7 @@ const Header = () => {
       >
         <Container>
           <Navbar.Brand className="d-flex justify-content-center align-content-center">
-            <Link to="/">
+            <Link to="/" className="shopName">
               <img
                 style={{ width: "3rem" }}
                 src="/Images/NavBrand.png"
