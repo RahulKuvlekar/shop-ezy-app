@@ -15,7 +15,7 @@ const OrderHistory = () => {
     db.collection("users")
       .doc(user?.uid)
       .collection("orders")
-      .orderBy("timestamp", "asc")
+      .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setOrderList(
           snapshot.docs.map((doc) => ({ ...doc.data(), orderId: doc.id }))
