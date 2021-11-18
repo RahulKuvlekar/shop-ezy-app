@@ -3,20 +3,15 @@ import { Card, Button } from "react-bootstrap";
 import "./SingleProduct.css";
 import Rating from "../Rating/Rating";
 import useCustomContext from "../../Hooks/UseCustomContext";
+import { useHistory } from "react-router";
 
 const SingleProduct = ({ product }) => {
   //   console.log(useCustomContext(), "HOOKS");
   const { cart, dispatchCart } = useCustomContext();
+  const history = useHistory();
   return (
     <Card className="singleProduct">
-      <div
-        style={{
-          height: "260px",
-          display: "flex",
-          alignItems: "center",
-          objectFit: "cover",
-        }}
-      >
+      <div className="singleProduct__img" style={{}}>
         <Card.Img
           style={{
             maxHeight: "100%",
@@ -26,6 +21,14 @@ const SingleProduct = ({ product }) => {
           src={product.image}
           alt={product.name}
         />
+        <button
+          className="img-btn btn-orange"
+          onClick={() => {
+            history.push(`/product/${product.id}`);
+          }}
+        >
+          View Product
+        </button>
       </div>
       <Card.Body className="singleProduct__body">
         <Card.Title>{product.name}</Card.Title>

@@ -13,6 +13,9 @@ const Home = () => {
   const Login = lazy(() => import("../Login/Login"));
   const SignUp = lazy(() => import("../SignUp/SignUp"));
   const OrderHistory = lazy(() => import("../OrderHistory/OrderHistory"));
+  const ViewProduct = lazy(() =>
+    import("../../Components/ViewProduct/ViewProduct")
+  );
 
   return (
     <>
@@ -26,6 +29,10 @@ const Home = () => {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             <Route exact path="/order-history" component={OrderHistory} />
+            <Route path="/product/:productId" component={ViewProduct} />
+            <Route>
+              <h1 style={{ margin: "6rem" }}>Error Page Not Found</h1>
+            </Route>
           </Switch>
         </Suspense>
       </Router>

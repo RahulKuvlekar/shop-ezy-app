@@ -188,7 +188,7 @@ const Header = () => {
               >
                 {cart.length > 0 ? (
                   <>
-                    {cart.map((product) => (
+                    {cart.map((product, idx) => (
                       <span className="cartitem" key={product.id}>
                         <img
                           src={product.image}

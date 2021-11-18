@@ -1,3 +1,39 @@
+.btn-orange {
+  background-color: #fb641b;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid white;
+  /* border-radius: 1rem; */
+  padding: 0.8rem 1.8rem;
+  margin-right: 1rem;
+  cursor: default;
+}
+.btn-orange:hover {
+  background-color: #d3591c;
+}
+.img-btn {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+.singleProduct__img {
+  height: 260px;
+  display: flex;
+  align-items: center;
+  object-fit: cover;
+}
+
+.singleProduct__img:hover img {
+  opacity: 0.5;
+  cursor: pointer;
+}
+.singleProduct__img:hover .img-btn {
+  display: block;
+}
 .singleProduct__body {
   display: flex;
   flex-flow: column wrap;

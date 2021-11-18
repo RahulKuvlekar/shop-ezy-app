@@ -39,7 +39,7 @@ const HomeBody = () => {
     }
 
     return filteredProducts;
-  };
+  }; 
   return (
     <div className="home__section">
       <FilterSidebar />

@@ -4,7 +4,15 @@ const CartReducer = (prevState, action) => {
       // console.log("reducer ", prevState, " Payload => ");
       return {
         ...prevState,
-        cartList: [...prevState.cartList, { ...action.payload, quantity: 1 }],
+        cartList: [
+          ...prevState.cartList,
+          {
+            ...action.payload,
+            quantity: `${
+              action.quantity ? Number(action.quantity) : Number(1)
+            }`,
+          },
+        ],
       };
     case "REMOVE_FROM_CART":
       return {
