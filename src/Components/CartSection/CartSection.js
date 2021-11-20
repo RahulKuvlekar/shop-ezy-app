@@ -12,8 +12,14 @@ import firebase from "@firebase/app-compat";
 import { v4 as uuidv4 } from "uuid";
 
 const CartSection = () => {
-  const { user, cart, dispatchCart, userAddress, dispatchToast } =
-    useCustomContext();
+  const {
+    user,
+    cart,
+    dispatchCart,
+    userAddress,
+    dispatchToast,
+    dispatchFilter,
+  } = useCustomContext();
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [confirmModal, setConfirmModal] = React.useState(false);
   const [paymentMode, setPaymentMode] = React.useState("");
@@ -43,6 +49,9 @@ const CartSection = () => {
     history.push("/");
     dispatchCart({
       type: "CLEAR_CART",
+    });
+    dispatchFilter({
+      type: "CLEAR_FILTERS",
     });
     dispatchToast({
       type: "ADD_NOTIFICATION",

@@ -11,7 +11,7 @@ const PersonalInfo = (props) => {
   const [addressInput, setAddressInput] = React.useState("");
   const [addressModal, setAddressModal] = React.useState(false);
   const history = useHistory();
-  console.log("Address Input => ", addressInput);
+  // console.log("Address Input => ", addressInput);
 
   const showAddressModal = () => {
     setAddressModal(true);
