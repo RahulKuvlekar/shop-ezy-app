@@ -23,11 +23,11 @@
 .cartSidebar__priceInfo {
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .order__description {
   max-height: 300px;
-  overflow: scroll;
+  overflow: auto;
 }
 .goback__btn {
   color: blue !important;
