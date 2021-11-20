@@ -28,7 +28,10 @@ const Header = () => {
   //   console.log(searchQuery);
   // console.log(location, "Pathname locatiin");
   // console.log(location.pathname.includes("login"));
-
+  const cartQuantity = cart.reduce(
+    (acc, item) => acc + Number(item.quantity),
+    0
+  );
   return (
     <>
       <Navbar
@@ -174,7 +177,7 @@ const Header = () => {
             <Dropdown align="end" autoClose={true}>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 <MdShoppingCart fontSize="2rem" />
-                {cart?.length > 0 && <Badge bg="danger">{cart?.length}</Badge>}
+                {cart?.length > 0 && <Badge bg="danger">{cartQuantity}</Badge>}
               </Dropdown.Toggle>
 
               <Dropdown.Menu
@@ -197,7 +200,11 @@ const Header = () => {
                         />
                         <div className="cartItem__details">
                           <span>{product.name}</span>
-                          <span>₹ {product.price}</span>
+                          <span>
+                            <b>
+                              ₹ {product.price} X Qty-{product.quantity}
+                            </b>
+                          </span>
                         </div>
                         <AiFillDelete
                           fontSize="20px"
