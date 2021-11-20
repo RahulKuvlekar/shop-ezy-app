@@ -47,7 +47,7 @@ const Toast = ({ position, autoDeleteInterval }) => {
     <div className={`notification-container ${position}`}>
       {toast.map((notification, i) => {
         if (autoDeleteInterval) {
-          setInterval(() => {
+          setTimeout(() => {
             dispatchToast({
               type: "DELETE_NOTIFICATION",
               payload: notification.id,
